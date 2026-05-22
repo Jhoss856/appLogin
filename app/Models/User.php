@@ -22,6 +22,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'career_id',
+        'terms_accepted',
     ];
 
     public function careers(){

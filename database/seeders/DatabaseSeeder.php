@@ -15,11 +15,19 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        //  User::withoutModelEvents();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        //  User::factory(10)->create();
+
+        // Comenta estas líneas poniéndoles // al inicio:
+        // User::factory()->create([
+        //     'name' => 'Test User',
+        //     'email' => 'test@example.com',
+        // ]);
+        
+        // Agrega el llamado a tu CareerSeeder aquí abajo:
+        $this->call([
+            CareerSeeder::class,
         ]);
     }
 }

@@ -15,6 +15,16 @@
         </div>
     @endif
 
+    @if ($errors->any())
+        <div style="background-color: #f8d7da; color: #721c24; padding: 15px; border-radius: 5px; margin-bottom: 20px; font-family: sans-serif;">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <form action="{{ url('/register') }}" method="POST">
         @csrf
         
@@ -22,7 +32,7 @@
         <input type="text" id="name" name="name" required><br>
 
         <label for="email">Correo:</label>
-        <input type="type" id="email" name="email" required><br>
+        <input type="email" id="email" name="email" required><br>
 
         <label for="password">Contraseña:</label>
         <input type="password" id="password" name="password" required><br>
@@ -38,7 +48,7 @@
         </select><br>
 
         <label for="terms_accepted">
-            <input type="checkbox" name="terms_accepted" id="terms_accepted" required>
+            <input type="checkbox" name="terms_accept" id="terms_accepted" required>
             Acepto los términos y condiciones
         </label><br>
 
