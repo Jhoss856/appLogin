@@ -5,27 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SGA | Registro de Estudiantes</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght=300;400;600;700&display=swap" rel="stylesheet">
     <style>
         body { 
             font-family: 'Inter', sans-serif; 
         }
 
-        /* Animación premium: Más lenta (1.5s) y con una curva de transición ultra fluida */
+        /* Animación de entrada fluida para la tarjeta */
         .animate-fade-in {
             animation: aparecerSuaveLento 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-            opacity: 0; /* Evita que la tarjeta parpadee al cargar */
+            opacity: 0;
         }
 
         @keyframes aparecerSuaveLento {
             from {
                 opacity: 0;
-                transform: translateY(12px); /* Un movimiento sutil hacia arriba */
+                transform: translateY(12px);
             }
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
+        }
+
+        /* Transición fluida para el cambio de ancho y color del medidor */
+        .password-strength-bar {
+            transition: width 0.4s ease, background-color 0.4s ease;
         }
     </style>
 </head>
@@ -118,6 +123,11 @@
                             <label for="password" class="text-xs font-bold text-slate-400 uppercase tracking-widest ml-1">Contraseña</label>
                             <input type="password" name="password" id="password" required
                                 class="w-full mt-1 px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all outline-none text-slate-700">
+                            
+                            <div class="w-full bg-slate-100 h-1.5 rounded-full mt-2 overflow-hidden">
+                                <div id="strengthBar" class="password-strength-bar h-full w-0 bg-slate-300"></div>
+                            </div>
+                            <span id="strengthText" class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mt-1 block ml-1">Introducir caracteres</span>
                         </div>
                         <div class="relative group">
                             <label for="password_confirmation" class="text-xs font-bold text-slate-400 uppercase tracking-widest ml-1">Repetir</label>
@@ -162,5 +172,39 @@
         </div>
     </div>
 
+    <script>
+        const passwordInput = document.getElementById('password');
+        const strengthBar = document.getElementById('strengthBar');
+        const strengthText = document.getElementById('strengthText');
+
+        passwordInput.addEventListener('input', () => {
+            const largo = passwordInput.value.length;
+
+            if (largo === 0) {
+                // Estado inicial sin caracteres
+                strengthBar.style.width = '0%';
+                strengthText.innerText = 'Introducir caracteres';
+                strengthText.className = "text-[10px] font-bold uppercase tracking-wider text-slate-400 mt-1 block ml-1";
+            } else if (largo >= 1 && largo <= 6) {
+                // 1 a 6 caracteres: Insegura (Rojo)
+                strengthBar.style.width = '33%';
+                strengthBar.style.backgroundColor = '#ef4444'; 
+                strengthText.innerText = 'Insegura';
+                strengthText.className = "text-[10px] font-bold uppercase tracking-wider text-rose-500 mt-1 block ml-1";
+            } else if (largo >= 7 && largo <= 12) {
+                // 7 a 12 caracteres: Media (Amarillo)
+                strengthBar.style.width = '66%';
+                strengthBar.style.backgroundColor = '#f59e0b'; 
+                strengthText.innerText = 'Media';
+                strengthText.className = "text-[10px] font-bold uppercase tracking-wider text-amber-500 mt-1 block ml-1";
+            } else if (largo >= 13) {
+                // 13 a más caracteres: Segura (Verde)
+                strengthBar.style.width = '100%';
+                strengthBar.style.backgroundColor = '#10b981'; 
+                strengthText.innerText = 'Segura';
+                strengthText.className = "text-[10px] font-bold uppercase tracking-wider text-emerald-500 mt-1 block ml-1";
+            }
+        });
+    </script>
 </body>
 </html>
