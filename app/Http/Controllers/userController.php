@@ -8,11 +8,12 @@ use App\Models\User;
 
 class userController extends Controller
 {
-    public function create (){
-        $careers = career::all();
-        return view('register', compact ('careers'));
+    public function create () {
+        $careers = Career::orderBy('name', 'asc')->get();
+        return view('register', compact('careers'));
     }
-    public function store(Request $request){
+
+    public function store(Request $request) {
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|unique:users,email',
@@ -22,12 +23,13 @@ class userController extends Controller
         ]);
 
         User::create([
-            'name' => $request ->name,
-            'email' => $request ->email,
+            'name' => $request->name,
+            'email' => $request->email,
             'password' => bcrypt($request->password),
             'career_id' => $request->career_id,
             'terms_accepted' => $request->has('terms_accept'),
         ]);
-        return redirect()->route('register')->with('sucess','Usuario registrado exitosamente.');
+
+        return back()->with('success', '¡Cuenta creada exitosamente!');
     }
 }
