@@ -6,33 +6,8 @@
     <title>SGA | Registro de Estudiantes</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght=300;400;600;700&display=swap" rel="stylesheet">
-    <style>
-        body { 
-            font-family: 'Inter', sans-serif; 
-        }
-
-        /* Animación de entrada fluida para la tarjeta */
-        .animate-fade-in {
-            animation: aparecerSuaveLento 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-            opacity: 0;
-        }
-
-        @keyframes aparecerSuaveLento {
-            from {
-                opacity: 0;
-                transform: translateY(12px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Transición fluida para el cambio de ancho y color del medidor */
-        .password-strength-bar {
-            transition: width 0.4s ease, background-color 0.4s ease;
-        }
-    </style>
+    
+    <link rel="stylesheet" href="app.css">
 </head>
 <body class="bg-cover bg-center min-h-screen flex items-center justify-center p-0 sm:p-6 relative" 
       style="background-image: url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=1920&auto=format&fit=crop');">
@@ -172,39 +147,6 @@
         </div>
     </div>
 
-    <script>
-        const passwordInput = document.getElementById('password');
-        const strengthBar = document.getElementById('strengthBar');
-        const strengthText = document.getElementById('strengthText');
-
-        passwordInput.addEventListener('input', () => {
-            const largo = passwordInput.value.length;
-
-            if (largo === 0) {
-                // Estado inicial sin caracteres
-                strengthBar.style.width = '0%';
-                strengthText.innerText = 'Introducir caracteres';
-                strengthText.className = "text-[10px] font-bold uppercase tracking-wider text-slate-400 mt-1 block ml-1";
-            } else if (largo >= 1 && largo <= 6) {
-                // 1 a 6 caracteres: Insegura (Rojo)
-                strengthBar.style.width = '33%';
-                strengthBar.style.backgroundColor = '#ef4444'; 
-                strengthText.innerText = 'Insegura';
-                strengthText.className = "text-[10px] font-bold uppercase tracking-wider text-rose-500 mt-1 block ml-1";
-            } else if (largo >= 7 && largo <= 12) {
-                // 7 a 12 caracteres: Media (Amarillo)
-                strengthBar.style.width = '66%';
-                strengthBar.style.backgroundColor = '#f59e0b'; 
-                strengthText.innerText = 'Media';
-                strengthText.className = "text-[10px] font-bold uppercase tracking-wider text-amber-500 mt-1 block ml-1";
-            } else if (largo >= 13) {
-                // 13 a más caracteres: Segura (Verde)
-                strengthBar.style.width = '100%';
-                strengthBar.style.backgroundColor = '#10b981'; 
-                strengthText.innerText = 'Segura';
-                strengthText.className = "text-[10px] font-bold uppercase tracking-wider text-emerald-500 mt-1 block ml-1";
-            }
-        });
-    </script>
+    <script src="app.js"></script>
 </body>
 </html>
